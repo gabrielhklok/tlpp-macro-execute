@@ -1,0 +1,33 @@
+#include "protheus.ch"
+
+/*/{Protheus.doc} macroexe
+Função para executar rotinas via macro.
+
+@author Gabriel Hegler Klok
+
+@type user function
+@since 30/04/2020
+@version 1.0
+/*/
+user function macroexe()
+    local oDlg as object 
+    local lOk as logical
+    local cFunc as character
+
+    lOk := .f.
+    cFunc := space(254)
+
+    DEFINE MSDIALOG oDlg TITLE "Rotina via Macro" FROM 000,000 TO 100,300 PIXEL
+			
+        @ 010,015 MSGET cFunc  SIZE 123, 10 OF oDlg PIXEL
+
+        sbutton():new( 30, 15, 1, {|| lOk := .t., oDlg:end()}, oDlg, .t.,,) 
+        sbutton():new( 30, 110, 2, {|| oDlg:End()}, oDlg,.T.,,)			
+    
+    ACTIVATE MSDIALOG oDlg CENTERED	
+
+    if lOk .and. ! empty(cFunc)
+        &(alltrim(cFunc))
+        msginfo("Função executada com sucesso!", "Execução Macro")
+    endif
+return 
